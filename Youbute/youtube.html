@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>YouTube.com Clone</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        *{
+            margin: 0;
+            font-family: Roboto, Arial;
+        }
+      p {
+        font-family: Roboto, Arial;
+        margin-top: 0;
+        margin-bottom: 0; 
+      }
+
+      .thumbnail{
+        width: 100%;
+        object-fit: cover;
+      }
+
+      .channel-picture, .video-info{
+        vertical-align: top;
+      }
+    
+
+      .video-info-grid{
+        display: grid;
+        grid-template-columns: 50px 1fr;
+        margin-top: 10px;
+
+      }
+
+      .profile-picture{
+        width: 35px;
+        border-radius: 50%;
+
+      }
+      .video-title{
+        font-size: 14px;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+      .video-stats, .video-author{
+        font-size: 12px;
+        margin-bottom: 5px;
+        
+      }
+
+      .video-grid-container{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 10px;
+        row-gap: 10px;
+      }
+
+      @media (max-width: 800px) {
+        .video-grid-container{
+
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (min-width: 1200px) {
+        .video-grid-container{
+
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+        
+      }
+
+
+      .header{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        height: 55px;
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        background-color: white;
+        border-bottom: 1px solid rgb(204, 204, 204);
+        z-index: 1;
+        
+    }
+      .left-section, .right-section{
+        display: flex;
+        align-items: center;
+     
+      }
+      .right-section{
+        flex-shrink: 0;  
+        width: 200px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-right: 20px;
+   
+
+    }
+      
+      .midde-section{
+        max-width: 500px;
+        flex: 1;
+        margin-right: 35px;
+        margin-left: 70px;
+        display: flex;
+        align-items : center ;
+      }
+      .img-menu {
+        height: 22px;
+        margin-right: 20px;
+        margin-left: 24px;
+    }
+    .img-logo{
+        height: 20px;
+    }
+
+    .search-bar{
+        height: 36px;
+        padding-left: 10px ;
+        font-size: 16px;
+        border: 1px solid rgb(204, 204, 204);
+        flex:1;
+        box-shadow: inset 1px 2px 5px rgba(0, 0, 0, 0.05);
+        width: 0;
+    }
+    .search-bar::placeholder{
+        font-family: Roboto;
+        font-size: 16px;
+
+    }
+    .serch-button{
+        height: 40px;
+        width: 55px;
+        background-color:  rgb(247, 247, 247);
+        border: 1px solid rgb(204, 204, 204);
+        margin-left: -1px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .mic-button{
+        width: 50px;
+        height: 40px;
+        background-color:   white;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .img-search, .img-mic{
+        height: 20px;
+
+    }
+    .img-upload , .img-apps, .img-notifi{
+        height: 22px;
+    }
+    .img-my-chane{
+        height: 30px;
+    }
+    .button-upload, .button-apps, .button-notifi, .button-my-chane{
+        border: none;
+        height: 40px;
+        background-color: white;
+
+    }
+    .img-my-chane{
+      border-radius: 50%;
+    }
+
+    .thumbnail-row{
+      position: relative;
+    }
+    .timer{
+      position: absolute;
+      right: 5px;
+      bottom: 10px;
+      background-color: black;
+      color: white;
+      font-size: 11px;
+      padding: 3px;
+      border-radius: 2px;
+      font-family: Roboto;
+    }
+    .div-noti{
+      position: relative;
+    }
+    .info-noti{
+      position: absolute;
+      right: -2px;
+      top: 2px;
+      background-color: red;
+      border-radius: 10px;
+      color: white;
+      font-size:12px;
+      padding: 2px 6px;
+    }
+    .inside-sidebar{
+      display: flex;
+      flex-direction: column; 
+      row-gap: 10px;
+      height: 75px;
+      width: 72px;
+      text-align: center;
+      justify-content: center;
+    }
+    .inside-sidebar:hover{
+      background-color: rgb(233, 233, 233);
+    }
+    .side-bar{
+      color: white;
+      position: fixed;
+      left: 0;
+      top: 55px;
+      bottom: 0;
+      width: 72px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 10px;
+      color: black;
+      
+  }
+    .side-bar-img{
+      height: 24px;
+    }
+
+    </style>
+  </head>
+  <body style="height: 3000px; padding-top: 75px; padding-left: 80px;">
+    <div class="header">
+      <div class="left-section"> 
+        <img class="img-menu" src="asset/hamburger-menu.svg" alt="">
+        <img class="img-logo" src="asset/youtube-logo.svg" alt="">
+
+      </div>
+      
+      <div class="midde-section">
+      <input class="search-bar" type="text" placeholder="Search" style="display: block;">
+      <button class="serch-button"><img class="img-search" src="asset/search.svg" alt=""></button>
+      <button class="mic-button"><img class="img-mic" src="asset/voice-search-icon.svg" alt=""></button>
+  
+    </div>
+
+      <div class="right-section"> 
+        <Button class="button-upload"> <img class="img-upload" src="asset/upload.svg" alt=""></Button>
+        <Button class="button-apps"> <img class="img-apps" src="asset/youtube-apps.svg" alt=""></Button>
+        <div class="div-noti">
+          <Button class="button-notifi">  <img class="img-notifi" src="asset/notifications.svg" alt=""></Button>
+            <div class="info-noti">
+              3
+            </div>
+        </div>
+        <Button  class="button-my-chane"> <img class="img-my-chane" src="asset/my-profile.png" alt=""></Button>
+      </div>
+    </div>
+
+    <div class="side-bar">
+        <div class="inside-sidebar">
+          <img class="side-bar-img" src="asset/home.svg" alt="">
+          <div>Home</div>
+        </div>
+        <div class="inside-sidebar">
+          <img class="side-bar-img" src="asset/explore.svg" alt="">
+          <div>Explore</div>
+        </div>
+        <div class="inside-sidebar">
+          <img class="side-bar-img" src="asset/subscriptions.svg" alt="">
+          <div>Subscriptions</div>
+        </div>
+        <div class="inside-sidebar">
+          <img class="side-bar-img" src="asset/originals.svg" alt="">
+          <div>Orginals</div>
+        </div>
+        <div class="inside-sidebar">
+          <img class="side-bar-img" src="asset/youtube-music (1).svg" alt="">
+          <div>YouTube Music</div>
+        </div>
+        <div class="inside-sidebar">
+          <img class="side-bar-img" src="asset/library.svg" alt="">
+          <div>Libray</div>
+        </div>
+    </div>
+
+    <div class="video-grid-container">
+        <div class="video-preview">
+            <div class="thumbnail-row">
+              <img class="thumbnail" src="asset/thumbnail-1.webp">
+              <div class="timer">14:20</div>
+            </div>
+            <div class="video-info-grid">
+              <div class="channel-picture">
+                <img class="profile-picture" src="asset/channel-1.jpeg">
+              </div>
+              <div class="video-info">
+                <p class="video-title">
+                  Talking Tech and AI with Google CEO Sundar Pichai!
+                </p>
+                <p class="video-author">
+                  Marques Brownlee
+                </p>
+                <p class="video-stats">
+                  3.4M views &#183; 6 months ago
+                </p>
+              </div>
+            </div>
+          </div>
+      
+          <div class="video-preview">
+            <div class="thumbnail-row">
+              <img class="thumbnail" src="asset/ksiazulo.avif">
+              <div class="timer">15:06</div>
+            </div>
+            <div class="video-info-grid">
+              <div class="channel-picture">
+                  <img class="profile-picture" src="asset/ksiazulo-profile.jpg">
+              </div>
+              <div class="video-info">
+                <p class="video-title">
+                  Try Not To Laugh Challenge #9
+                </p>
+                <p class="video-author">
+                  Markiplier
+                </p>
+                <p class="video-stats">
+                  19M views &#183; 4 years ago
+                </p>
+              </div>
+            </div>
+          </div>
+      
+          <div class="video-preview">
+              <div class="thumbnail-row">
+                <img class="thumbnail" src="asset/zero.avif">
+                <div class="timer">13:12</div>
+              </div>
+              <div class="video-info-grid">
+                <div class="channel-picture">
+                    <img class="profile-picture" src="asset/zero-profile.jpg">
+                </div>
+                <div class="video-info">
+                  <p class="video-title">
+                    Try Not To Laugh Challenge #9
+                  </p>
+                  <p class="video-author">
+                    Markiplier
+                  </p>
+                  <p class="video-stats">
+                    19M views &#183; 4 years ago
+                  </p>
+                </div>
+              </div>
+            </div>
+      
+            <div class="video-preview">
+              <div class="thumbnail-row">
+                <img class="thumbnail" src="asset/thumbnail-1.webp">
+                <div class="timer">14:20</div>
+              </div>
+              <div class="video-info-grid">
+                <div class="channel-picture">
+                    <img class="profile-picture" src="asset/channel-1.jpeg">
+                </div>
+                <div class="video-info">
+                  <p class="video-title">
+                    Try Not To Laugh Challenge #9
+                  </p>
+                  <p class="video-author">
+                    Markiplier
+                  </p>
+                  <p class="video-stats">
+                    19M views &#183; 4 years ago
+                  </p>
+                </div>
+              </div>
+            </div>
+      
+            <div class="video-preview">
+              <div class="thumbnail-row">
+                <img class="thumbnail" src="asset/thumbnail-1.webp">
+                <div class="timer">14:20</div>
+              </div>
+              <div class="video-info-grid">
+                <div class="channel-picture">
+                    <img class="profile-picture" src="asset/channel-1.jpeg">
+                </div>
+                <div class="video-info">
+                  <p class="video-title">
+                    Try Not To Laugh Challenge #9
+                  </p>
+                  <p class="video-author">
+                    Markiplier
+                  </p>
+                  <p class="video-stats">
+                    19M views &#183; 4 years ago
+                  </p>
+                </div>
+              </div>
+            </div>
+      
+            <div class="video-preview">
+              <div class="thumbnail-row">
+                <img class="thumbnail" src="asset/thumbnail-1.webp">
+                <div class="timer">14:20</div>
+              </div>
+              <div class="video-info-grid">
+                <div class="channel-picture">
+                    <img class="profile-picture" src="asset/channel-1.jpeg">
+                </div>
+                <div class="video-info">
+                  <p class="video-title">
+                    Try Not To Laugh Challenge #9
+                  </p>
+                  <p class="video-author">
+                    Markiplier
+                  </p>
+                  <p class="video-stats">
+                    19M views &#183; 4 years ago
+                  </p>
+                </div>
+              </div>
+            </div>
+    </div>
+ 
+  </body>
+</html>
